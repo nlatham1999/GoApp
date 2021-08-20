@@ -20,13 +20,13 @@ func main() {
 
 	// these are the endpoints
 	//C
-	router.POST("/create-order", routes.AddOrder)
+	router.POST("/order/create/", routes.AddOrder)
 	//R
 	router.GET("/waiter/:waiter", routes.GetOrdersByWaiter)
 	router.GET("/orders", routes.GetOrders)
 	router.GET("/order/:id/", routes.GetOrderById)
 	//U
-	router.PUT("/waiter/:id", routes.UpdateWaiter)
+	router.PUT("/waiter/update/:id", routes.UpdateWaiter)
 	router.PUT("/order/update/:id", routes.UpdateOrder)
 	//D
 	router.DELETE("/order/delete/:id", routes.DeleteOrder)
