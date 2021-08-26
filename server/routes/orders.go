@@ -27,12 +27,14 @@ func AddOrder(c *gin.Context) {
 
 	if err := c.BindJSON(&order); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		fmt.Println(err)
 		return
 	}
 
 	validationErr := validate.Struct(order)
 	if validationErr != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": validationErr.Error()})
+		fmt.Println(validationErr)
 		return
 	}
 	order.ID = primitive.NewObjectID()
@@ -41,6 +43,7 @@ func AddOrder(c *gin.Context) {
 	if insertErr != nil {
 		msg := fmt.Sprintf("order item was not created")
 		c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+		fmt.Println(insertErr)
 		return
 	}
 	defer cancel()
@@ -50,6 +53,8 @@ func AddOrder(c *gin.Context) {
 
 //get all orders
 func GetOrders(c *gin.Context){
+	
+    c.Header("Access-Control-Allow-Origin", "*")
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	
@@ -59,11 +64,13 @@ func GetOrders(c *gin.Context){
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
 		return
 	}
 	
 	if err = cursor.All(ctx, &orders); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
 		return
 	}
 
@@ -77,6 +84,8 @@ func GetOrders(c *gin.Context){
 //get all orders by the waiter's name
 func GetOrdersByWaiter(c *gin.Context){
 
+    c.Header("Access-Control-Allow-Origin", "*")
+
 	waiter := c.Params.ByName("waiter")
 	
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
@@ -86,11 +95,13 @@ func GetOrdersByWaiter(c *gin.Context){
 	cursor, err := orderCollection.Find(ctx, bson.M{"server": waiter})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
 		return
 	}
 
 	if err = cursor.All(ctx, &orders); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
 		return
 	}
 
@@ -103,6 +114,8 @@ func GetOrdersByWaiter(c *gin.Context){
 
 //get an order by its id
 func GetOrderById(c *gin.Context){
+	
+    c.Header("Access-Control-Allow-Origin", "*")
 
 	orderID := c.Params.ByName("id")
 	docID, _ := primitive.ObjectIDFromHex(orderID)
@@ -113,6 +126,7 @@ func GetOrderById(c *gin.Context){
 
 	if err := orderCollection.FindOne(ctx, bson.M{"_id": docID}).Decode(&order); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
 		return
 	}
 
@@ -125,6 +139,8 @@ func GetOrderById(c *gin.Context){
 
 //update a waiter's name for an order
 func UpdateWaiter(c *gin.Context){
+	
+    c.Header("Access-Control-Allow-Origin", "*")
 
 	orderID := c.Params.ByName("id")
 	docID, _ := primitive.ObjectIDFromHex(orderID)
@@ -139,6 +155,7 @@ func UpdateWaiter(c *gin.Context){
 
 	if err := c.BindJSON(&waiter); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		fmt.Println(err)
 		return
 	}
 
@@ -150,6 +167,7 @@ func UpdateWaiter(c *gin.Context){
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
 		return
 	}
 
@@ -161,6 +179,8 @@ func UpdateWaiter(c *gin.Context){
 
 //update the order
 func UpdateOrder(c *gin.Context){
+	
+    c.Header("Access-Control-Allow-Origin", "*")
 
 	orderID := c.Params.ByName("id")
 	docID, _ := primitive.ObjectIDFromHex(orderID)
@@ -171,12 +191,14 @@ func UpdateOrder(c *gin.Context){
 
 	if err := c.BindJSON(&order); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		fmt.Println(err)
 		return
 	}
 
 	validationErr := validate.Struct(order)
 	if validationErr != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": validationErr.Error()})
+		fmt.Println(validationErr)
 		return
 	}
 
@@ -193,6 +215,7 @@ func UpdateOrder(c *gin.Context){
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
 		return
 	}
 
@@ -204,6 +227,8 @@ func UpdateOrder(c *gin.Context){
 //delete an order given the id
 func DeleteOrder(c * gin.Context){
 	
+    c.Header("Access-Control-Allow-Origin", "*")
+	
 	orderID := c.Params.ByName("id")
 	docID, _ := primitive.ObjectIDFromHex(orderID)
 
@@ -213,6 +238,7 @@ func DeleteOrder(c * gin.Context){
 	
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
 		return
 	}
 
