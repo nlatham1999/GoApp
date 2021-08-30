@@ -37,9 +37,6 @@ const Order = ({orderData, setChangeWaiter, deleteSingleOrder, setChangeOrder}) 
         )
     }
 
-
-
-
 }
 
 export default Order

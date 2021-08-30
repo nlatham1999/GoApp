@@ -53,8 +53,6 @@ func AddOrder(c *gin.Context) {
 
 //get all orders
 func GetOrders(c *gin.Context){
-	
-    c.Header("Access-Control-Allow-Origin", "*")
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	
@@ -84,8 +82,6 @@ func GetOrders(c *gin.Context){
 //get all orders by the waiter's name
 func GetOrdersByWaiter(c *gin.Context){
 
-    c.Header("Access-Control-Allow-Origin", "*")
-
 	waiter := c.Params.ByName("waiter")
 	
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
@@ -114,8 +110,6 @@ func GetOrdersByWaiter(c *gin.Context){
 
 //get an order by its id
 func GetOrderById(c *gin.Context){
-	
-    c.Header("Access-Control-Allow-Origin", "*")
 
 	orderID := c.Params.ByName("id")
 	docID, _ := primitive.ObjectIDFromHex(orderID)
@@ -139,8 +133,6 @@ func GetOrderById(c *gin.Context){
 
 //update a waiter's name for an order
 func UpdateWaiter(c *gin.Context){
-	
-    c.Header("Access-Control-Allow-Origin", "*")
 
 	orderID := c.Params.ByName("id")
 	docID, _ := primitive.ObjectIDFromHex(orderID)
@@ -179,8 +171,6 @@ func UpdateWaiter(c *gin.Context){
 
 //update the order
 func UpdateOrder(c *gin.Context){
-	
-    c.Header("Access-Control-Allow-Origin", "*")
 
 	orderID := c.Params.ByName("id")
 	docID, _ := primitive.ObjectIDFromHex(orderID)
@@ -226,8 +216,6 @@ func UpdateOrder(c *gin.Context){
 
 //delete an order given the id
 func DeleteOrder(c * gin.Context){
-	
-    c.Header("Access-Control-Allow-Origin", "*")
 	
 	orderID := c.Params.ByName("id")
 	docID, _ := primitive.ObjectIDFromHex(orderID)

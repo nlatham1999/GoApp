@@ -110,10 +110,9 @@ const Orders = () => {
     //changes the waiter
     function changeWaiterForOrder(){
         changeWaiter.change = false
-        console.log("test")
         var url = "http://localhost:5000/waiter/update/" + changeWaiter.id
         axios.put(url, {
-            "server": "sam"
+            "server": newWaiterName
         }).then(response => {
             console.log(response.status)
             if(response.status == 200){
@@ -138,7 +137,6 @@ const Orders = () => {
     //creates a new order
     function addSingleOrder(){
         setAddNewOrder(false)
-        // console.log(newOrder)
         var url = "http://localhost:5000/order/create"
         axios.post(url, {
             "server": newOrder.server,
@@ -169,11 +167,11 @@ const Orders = () => {
         var url = "http://localhost:5000/order/delete/" + id
         axios.delete(url, {
 
-        }).then(
-            setRefreshData(true)
-        ).catch(function (error) {
-                console.log(error);
-        });
+        }).then(response => {
+            if(response.status == 200){
+                setRefreshData(true)
+            }
+        })
     }
 
 }

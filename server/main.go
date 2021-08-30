@@ -2,7 +2,6 @@ package main
 
 import (
 	"os"
-	"time"
 
 	"server/routes"
 	"github.com/gin-gonic/gin"
@@ -20,23 +19,7 @@ func main() {
 	router := gin.New()
 	router.Use(gin.Logger())
 
-	// CORS for http:localhost:5000 and https://github.com origins, allowing:
-    // - POST, GET, PUT, DELETE
-    // - Origin header
-    // - Credentials share
-    // - Preflight requests cached for 12 hours
-    router.Use(cors.New(cors.Config{
-        AllowOrigins:     []string{"http://localhost:3000"},
-        AllowMethods:     []string{"POST", "GET", "PUT", "DELETE"},
-        AllowHeaders:     []string{"Origin", "content-type"},
-        ExposeHeaders:    []string{"Content-Length"},
-        AllowCredentials: true,
-        AllowOriginFunc: func(origin string) bool {
-            return origin == "https://github.com"
-        },
-        MaxAge: 12 * time.Hour,
-		
-    }))
+    router.Use(cors.Default())
 
 	// these are the endpoints
 	//C
