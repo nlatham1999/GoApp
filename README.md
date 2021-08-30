@@ -2,4 +2,4 @@ This the the repo for my fullstack restaurant app tutorial located on [here](htt
 
 When I was learning how to build a web server in Go with MongoDB, I couldn't find a good tutorial, so I decided to make my own so others would hopefully have an easier time.
 
-If you have any constructive criticism, let me know at nicholaslatham1999@gmail.com
+If you have any thoughts, comments, or constructive criticism, please let me know at nicholaslatham1999@gmail.com or drop a comment in the article
